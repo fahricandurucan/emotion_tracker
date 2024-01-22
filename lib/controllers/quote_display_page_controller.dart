@@ -1,13 +1,17 @@
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:emotion_tracker/models/quote.dart';
 // import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
 class QuoteDisplayPageController extends GetxController {
   final quote = "".obs;
+  final imglink = "".obs;
   final String _apiKey =
       '00fa553d76e5afea18e8d00a83c45619'; // Oluşturduğunuz API anahtarını buraya ekleyin
+
+  List<Quote> quoteList = <Quote>[].obs;
 
   Future<void> fetchQuote(String emotion) async {
     try {
@@ -21,16 +25,17 @@ class QuoteDisplayPageController extends GetxController {
         print("1");
         // Başarılı durumu
         final List<dynamic> quotes = response.data['quotes'];
-        print(quotes);
         if (quotes.isNotEmpty) {
           print("2");
-
           final randomQuote = quotes[Random().nextInt(quotes.length)];
-          print(randomQuote['body']);
+          print(randomQuote);
+          print(randomQuote["author"]);
           quote.value = randomQuote['body'];
+          Quote newQuote = Quote(title: emotion, text: quote.value, author: randomQuote["author"]);
+          quoteList.add(newQuote);
+          getImage(emotion);
         } else {
           print("3");
-
           print("No quotes available for this emotion.");
         }
       } else {
@@ -45,5 +50,9 @@ class QuoteDisplayPageController extends GetxController {
       // Hata durumu
       print("Error: $error");
     }
+  }
+
+  getImage(String emotion) async {
+    imglink.value = "${emotion.toLowerCase()}.jpg";
   }
 }
