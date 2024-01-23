@@ -35,7 +35,7 @@ class QuoteDisplayPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        quoteDisplayPageController.quoteList.last.title,
+                        quoteDisplayPageController.quoteList.last.emotion,
                         style: const TextStyle(
                             fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,

@@ -1,5 +1,6 @@
 import 'package:emotion_tracker/const/const.dart';
 import 'package:emotion_tracker/controllers/home_page_controller.dart';
+import 'package:emotion_tracker/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,7 +39,13 @@ class HomePage extends StatelessWidget {
               const SizedBox(
                 height: 50,
               ),
-              historyButton(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  historyButton(),
+                  deleteButton(),
+                ],
+              ),
             ],
           ),
         ),
@@ -77,12 +84,34 @@ class HomePage extends StatelessWidget {
 
   Widget historyButton() {
     return ElevatedButton(
-        onPressed: () {},
+        onPressed: () async {
+          DatabaseHelper databaseHelper = DatabaseHelper();
+          List<Map<String, dynamic>> emotions = await databaseHelper.getEmotions();
+          for (var emotion in emotions) {
+            print(
+                "Emotion: ${emotion['emotion']}, Timestamp: ${emotion['timestamp']}, Author: ${emotion['author']}");
+          }
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color.fromARGB(255, 142, 230, 145), // Arka plan rengi
         ),
         child: const Text(
           "Show History",
+          style: TextStyle(color: Colors.white),
+        ));
+  }
+
+  Widget deleteButton() {
+    return ElevatedButton(
+        onPressed: () async {
+          DatabaseHelper databaseHelper = DatabaseHelper();
+          databaseHelper.deleteAllEmotions();
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 255, 46, 46), // Arka plan rengi
+        ),
+        child: const Text(
+          "Delete",
           style: TextStyle(color: Colors.white),
         ));
   }

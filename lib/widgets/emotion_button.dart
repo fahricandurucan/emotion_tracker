@@ -38,9 +38,6 @@ class EmotionButton extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: () {
-          // Burada duygu seçildiğinde yapılacak işlemleri ekleyebilirsin.
-          // Örneğin, veritabanına kaydetme ve alıntıyı getirme işlemleri.
-          // Bu noktada navigator kullanarak bir sonraki sayfaya geçebilirsin.
           quoteDisplayPageController.fetchQuote(emotion);
           Get.to(QuoteDisplayPage());
         },

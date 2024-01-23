@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:emotion_tracker/models/quote.dart';
+import 'package:emotion_tracker/services/database_helper.dart';
 // import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +13,8 @@ class QuoteDisplayPageController extends GetxController {
       '00fa553d76e5afea18e8d00a83c45619'; // Oluşturduğunuz API anahtarını buraya ekleyin
 
   List<Quote> quoteList = <Quote>[].obs;
+
+  Rx<Quote> quoteModel = Quote(emotion: "", timestamp: "", text: "", author: "").obs;
 
   Future<void> fetchQuote(String emotion) async {
     try {
@@ -31,7 +34,19 @@ class QuoteDisplayPageController extends GetxController {
           print(randomQuote);
           print(randomQuote["author"]);
           quote.value = randomQuote['body'];
-          Quote newQuote = Quote(title: emotion, text: quote.value, author: randomQuote["author"]);
+          Quote newQuote = Quote(
+              text: quote.value,
+              author: randomQuote["author"],
+              emotion: emotion,
+              timestamp: DateTime.now().toString());
+
+          DatabaseHelper databaseHelper = DatabaseHelper();
+          databaseHelper.database;
+          databaseHelper.initDatabase();
+          databaseHelper.insertEmotion(
+              newQuote.emotion, DateTime.now().toString(), newQuote.text, newQuote.author);
+
+          print("ccccccc ${quoteModel.value.author}");
           quoteList.add(newQuote);
           getImage(emotion);
         } else {
@@ -54,5 +69,14 @@ class QuoteDisplayPageController extends GetxController {
 
   getImage(String emotion) async {
     imglink.value = "${emotion.toLowerCase()}.jpg";
+  }
+
+  Quote getQuote() {
+    if (quoteList.isNotEmpty) {
+      return quoteList.last;
+    } else {
+      // Eğer liste boşsa, null veya başka bir değer dönebilirsiniz.
+      return Quote(text: "", author: "", emotion: "", timestamp: "");
+    }
   }
 }
