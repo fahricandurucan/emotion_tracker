@@ -1,5 +1,6 @@
 import 'package:emotion_tracker/const/const.dart';
 import 'package:emotion_tracker/controllers/home_page_controller.dart';
+import 'package:emotion_tracker/screens/history_page.dart';
 import 'package:emotion_tracker/services/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -91,6 +92,7 @@ class HomePage extends StatelessWidget {
             print(
                 "Emotion: ${emotion['emotion']}, Timestamp: ${emotion['timestamp']}, Author: ${emotion['author']}");
           }
+          Get.to(HistoryPage());
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color.fromARGB(255, 142, 230, 145), // Arka plan rengi
