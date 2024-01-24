@@ -1,5 +1,6 @@
 import 'package:emotion_tracker/const/const.dart';
 import 'package:emotion_tracker/controllers/home_page_controller.dart';
+import 'package:emotion_tracker/notification/notification_service2.dart';
 import 'package:emotion_tracker/screens/history_page.dart';
 import 'package:emotion_tracker/services/database_helper.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,28 @@ class HomePage extends StatelessWidget {
                 children: [
                   historyButton(),
                   deleteButton(),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await NotificationService2.showNotification(
+                        title: "title of notofication",
+                        body: "body of the notification",
+                        schedule: true,
+                        interval: 5,
+                      );
+
+                      // Şu andan 10 saniye sonra bir bildirim gönderme
+                      // DateTime scheduledTime = DateTime.now().add(const Duration(seconds: 5));
+                      // print(DateTime.now());
+                      // print(scheduledTime);
+                      // Future.delayed(const Duration(seconds: 10), () async {
+                      //   await NotificationService().showNotification(
+                      //     title: "Scheduled Notification",
+                      //     body: "This is a scheduled notification.",
+                      //   );
+                      // });
+                    },
+                    child: const Text("Schedule Notification"),
+                  ),
                 ],
               ),
             ],
@@ -92,7 +115,7 @@ class HomePage extends StatelessWidget {
             print(
                 "Emotion: ${emotion['emotion']}, Timestamp: ${emotion['timestamp']}, Author: ${emotion['author']}");
           }
-          Get.to(HistoryPage());
+          Get.to(const HistoryPage());
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color.fromARGB(255, 142, 230, 145), // Arka plan rengi

@@ -29,19 +29,36 @@ class QuoteDisplayPage extends StatelessWidget {
               child: Container(
                 // color: Colors.pink,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 100),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                icon: const Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.white,
+                                )),
+                          ],
+                        ),
+                      ),
                       Text(
                         quoteDisplayPageController.quoteList.last.emotion,
                         style: const TextStyle(
                             fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
+                      const Spacer(),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 50),
                         child: Column(
                           children: [
                             Padding(
