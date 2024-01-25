@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 class Const {
   static List<String> positiveEmotion = [
     "Alertness",
@@ -22,4 +24,28 @@ class Const {
     "Offense",
     "Sadness"
   ];
+
+  static screenWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
+
+  static screenHight(BuildContext context) {
+    return MediaQuery.of(context).size.height;
+  }
+}
+
+// Const.dart
+class AppColors {
+  static const Color backgroundColor = Color.fromARGB(255, 243, 243, 243);
+  static const Color positiveButtonColor = Color.fromARGB(255, 175, 230, 255);
+  static const Color negativeButtonColor = Color.fromARGB(255, 255, 151, 144);
+}
+
+class AppStyles {
+  static TextStyle titleTextStyle = const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.25,
+    color: Color.fromARGB(255, 65, 66, 68),
+  );
 }

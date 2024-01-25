@@ -1,7 +1,12 @@
 import 'package:emotion_tracker/const/const.dart';
+import 'package:emotion_tracker/controllers/history_page_controller.dart';
 import 'package:emotion_tracker/services/database_helper.dart';
+import 'package:emotion_tracker/widgets/emotion_statistics_card.dart';
+import 'package:emotion_tracker/widgets/history_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
+
+import '../widgets/alert_dialog_widget.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -15,6 +20,8 @@ class _HistoryPageState extends State<HistoryPage> with SingleTickerProviderStat
   late List<Map<String, dynamic>> emotions;
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
+
+  HistoryPageController historyPageController = Get.put(HistoryPageController());
 
   @override
   void initState() {
@@ -41,6 +48,16 @@ class _HistoryPageState extends State<HistoryPage> with SingleTickerProviderStat
     });
   }
 
+  Future<void> deleteAllAndRefresh() async {
+    try {
+      final DatabaseHelper databaseHelper = DatabaseHelper();
+      await databaseHelper.deleteAllEmotions();
+      await _loadEmotions();
+    } catch (e) {
+      print('Error deleting emotions: $e');
+    }
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -53,57 +70,74 @@ class _HistoryPageState extends State<HistoryPage> with SingleTickerProviderStat
     _controller.forward();
   }
 
+  Future<bool> _confirmDeleteDialog() async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialogWidget();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Emotion History'),
-      ),
+      appBar: emotions.isEmpty
+          ? null
+          : AppBar(
+              centerTitle: true,
+              title: const Text('Emotion History', style: TextStyle(color: Color(0xff292D32))),
+              actions: [
+                IconButton(
+                  onPressed: () async {
+                    bool confirmed = await _confirmDeleteDialog();
+                    if (confirmed) {
+                      await historyPageController.deleteAllAndRefresh();
+                      setState(() {
+                        _loadEmotions();
+                      });
+                    }
+                  },
+                  icon: Image.asset(
+                    "assets/delete.png",
+                    width: 24,
+                    color: const Color(0xff292D32),
+                  ),
+                ),
+              ],
+            ),
       body: emotions.isEmpty
-          ? const Center(child: Text('Henüz geçmiş hissiyat bulunmuyor.'))
-          : AnimatedList(
-              initialItemCount: emotions.length,
-              itemBuilder: (context, index, animation) {
-                return SlideTransition(
-                  position: _offsetAnimation,
-                  child: _buildItem(emotions[index]),
-                );
-              },
+          ? Center(
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/placeholder.gif",
+                  width: Const.screenWidth(context) * 0.2,
+                  height: Const.screenWidth(context) * 0.2,
+                ),
+                SizedBox(
+                  height: Const.screenHight(context) * 0.015,
+                ),
+                const Text('There is no past feeling yet.'),
+              ],
+            ))
+          : Column(
+              children: [
+                Expanded(
+                  child: AnimatedList(
+                    initialItemCount: emotions.length,
+                    itemBuilder: (context, index, animation) {
+                      return SlideTransition(
+                        position: _offsetAnimation,
+                        child: HistoryListItem(emotion: emotions[index]),
+                      );
+                    },
+                  ),
+                ),
+                EmotionStatisticsCard(),
+              ],
             ),
     );
-  }
-
-  Widget _buildItem(Map<String, dynamic> emotion) {
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      color: Const.positiveEmotion.contains(emotion["emotion"])
-          ? const Color.fromARGB(255, 175, 230, 255)
-          : const Color.fromARGB(255, 255, 151, 144),
-      child: ListTile(
-        title: Text(
-          emotion["emotion"],
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        subtitle: Text(
-          _formatTimeStamp(emotion["timestamp"]),
-          style: const TextStyle(
-            color: Colors.white70,
-          ),
-        ),
-        onTap: () {
-          // Tıklanabilir olduğunda ek bir işlev ekleyebilirsiniz
-        },
-      ),
-    );
-  }
-
-  String _formatTimeStamp(String timeStamp) {
-    DateTime dateTime = DateTime.parse(timeStamp);
-    return DateFormat('dd.MM.yyyy HH:mm').format(dateTime);
   }
 }

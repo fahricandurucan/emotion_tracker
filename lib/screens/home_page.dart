@@ -1,8 +1,8 @@
 import 'package:emotion_tracker/const/const.dart';
 import 'package:emotion_tracker/controllers/home_page_controller.dart';
-import 'package:emotion_tracker/notification/notification_service2.dart';
 import 'package:emotion_tracker/screens/history_page.dart';
 import 'package:emotion_tracker/services/database_helper.dart';
+import 'package:emotion_tracker/widgets/animated_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,57 +17,36 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = const Color.fromARGB(255, 243, 243, 243); // Gri tonları
-
     return Scaffold(
-      backgroundColor: backgroundColor,
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 50,
+              SizedBox(
+                height: Const.screenHight(context) * 0.07,
               ),
-              const Text("How are you feeling today?", style: TextStyle(fontSize: 24)),
-              const SizedBox(
-                height: 70,
+              const AnimatedTextWidget(
+                  text: "How are you feeling today?",
+                  fontSize: 24,
+                  textColor: Color(0xff292D32),
+                  fontWeight: FontWeight.w600,
+                  milliseconds: 70),
+              SizedBox(
+                height: Const.screenHight(context) * 0.1,
               ),
-              titleEmotion("Positive Emotions"),
-              buildEmotionList(Const.positiveEmotion),
+              titleEmotion("Positive Emotions", Icons.sentiment_very_satisfied, context),
+              buildEmotionList(Const.positiveEmotion, context),
               const SizedBox(height: 50),
-              titleEmotion("Negative Emotions"),
-              buildEmotionList(Const.negativeEmotion),
-              const SizedBox(
-                height: 50,
+              titleEmotion("Negative Emotions", Icons.sentiment_very_dissatisfied, context),
+              buildEmotionList(Const.negativeEmotion, context),
+              SizedBox(
+                height: Const.screenHight(context) * 0.07,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   historyButton(),
-                  deleteButton(),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await NotificationService2.showNotification(
-                        title: "title of notofication",
-                        body: "body of the notification",
-                        schedule: true,
-                        interval: 5,
-                      );
-
-                      // Şu andan 10 saniye sonra bir bildirim gönderme
-                      // DateTime scheduledTime = DateTime.now().add(const Duration(seconds: 5));
-                      // print(DateTime.now());
-                      // print(scheduledTime);
-                      // Future.delayed(const Duration(seconds: 10), () async {
-                      //   await NotificationService().showNotification(
-                      //     title: "Scheduled Notification",
-                      //     body: "This is a scheduled notification.",
-                      //   );
-                      // });
-                    },
-                    child: const Text("Schedule Notification"),
-                  ),
                 ],
               ),
             ],
@@ -77,9 +56,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildEmotionList(List<String> emotions) {
+  Widget buildEmotionList(List<String> emotions, BuildContext context) {
     return SizedBox(
-      height: 150,
+      height: Const.screenHight(context) * 0.22,
       child: PageView.builder(
         controller: homePageController.pageController,
         scrollDirection: Axis.horizontal,
@@ -91,16 +70,28 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget titleEmotion(String title) {
+  Widget titleEmotion(String title, IconData icon, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
+      padding: EdgeInsets.only(left: Const.screenWidth(context) * 0.03),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-          )
+            style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.25,
+                color: Color.fromARGB(255, 65, 66, 68)),
+          ),
+          SizedBox(
+            width: Const.screenHight(context) * 0.007,
+          ),
+          Icon(
+            icon,
+            size: 24,
+            color: const Color.fromARGB(255, 65, 66, 68),
+          ),
         ],
       ),
     );
@@ -118,25 +109,10 @@ class HomePage extends StatelessWidget {
           Get.to(const HistoryPage());
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 142, 230, 145), // Arka plan rengi
+          backgroundColor: const Color.fromARGB(255, 142, 230, 145),
         ),
         child: const Text(
           "Show History",
-          style: TextStyle(color: Colors.white),
-        ));
-  }
-
-  Widget deleteButton() {
-    return ElevatedButton(
-        onPressed: () async {
-          DatabaseHelper databaseHelper = DatabaseHelper();
-          databaseHelper.deleteAllEmotions();
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 255, 46, 46), // Arka plan rengi
-        ),
-        child: const Text(
-          "Delete",
           style: TextStyle(color: Colors.white),
         ));
   }

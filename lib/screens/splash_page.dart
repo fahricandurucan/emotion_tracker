@@ -2,6 +2,8 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:emotion_tracker/screens/home_page.dart';
 import 'package:flutter/material.dart';
 
+import '../const/const.dart';
+
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
@@ -15,7 +17,7 @@ class SplashScreen extends StatelessWidget {
             width: double.infinity,
             child: Image.asset(
               "assets/emotions.gif",
-              width: 500,
+              width: Const.screenWidth(context) / 2,
             ),
           ),
           nextScreen: HomePage(),

@@ -18,25 +18,12 @@ class EmotionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150, // İstediğiniz boyutu ayarlayabilirsiniz
-      height: 150, // İstediğiniz boyutu ayarlayabilirsiniz
-      padding: const EdgeInsets.all(4),
-      margin: const EdgeInsets.all(4),
+      width: Const.screenWidth(context) * 0.36, // İstediğiniz boyutu ayarlayabilirsiniz
+      height: Const.screenHight(context) * 0.22, // İstediğiniz boyutu ayarlayabilirsiniz
+      padding: EdgeInsets.all(Const.screenWidth(context) * 0.01),
+      margin: EdgeInsets.all(Const.screenWidth(context) * 0.01),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        // border: Border.all(
-        //   color: Colors.black, // Kenar rengini ayarlayabilirsiniz
-        // ),
-        boxShadow: [
-          BoxShadow(
-            color: Const.positiveEmotion.contains(emotion)
-                ? const Color.fromARGB(255, 222, 244, 255)
-                : const Color.fromARGB(255, 255, 223, 220),
-            spreadRadius: 1,
-            blurRadius: 1,
-            offset: const Offset(1, 1), // gölge konumu
-          ),
-        ],
       ),
       child: ElevatedButton(
         onPressed: () async {
@@ -70,6 +57,7 @@ class EmotionButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
+          elevation: 5,
         ),
         child: Text(
           emotion,
