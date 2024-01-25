@@ -1,8 +1,10 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:emotion_tracker/const/const.dart';
 import 'package:emotion_tracker/controllers/quote_display_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../notification/notification_service2.dart';
 import '../screens/quote_display_page.dart';
 
 class EmotionButton extends StatelessWidget {
@@ -37,7 +39,26 @@ class EmotionButton extends StatelessWidget {
         ],
       ),
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
+          // Bildirim gönderme
+          await NotificationService2.showNotification(
+            title: "Emotion Tracker",
+            body: "How are you feeling now?",
+            schedule: true,
+            interval: 5,
+            payload: {"emotion": emotion},
+            actionButtons: [
+              NotificationActionButton(
+                key: "CHANGE_EMOTION_KEY",
+                label: "Change Emotion",
+              ),
+              NotificationActionButton(
+                key: "GET_NEW_QUOTE_KEY",
+                label: "Get New Quote",
+              ),
+            ],
+          );
+
           quoteDisplayPageController.fetchQuote(emotion);
           Get.to(QuoteDisplayPage());
         },

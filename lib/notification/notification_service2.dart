@@ -1,7 +1,13 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:emotion_tracker/controllers/quote_display_page_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../screens/quote_display_page.dart';
 
 class NotificationService2 {
+  QuoteDisplayPageController quoteDisplayPageController = Get.find<QuoteDisplayPageController>();
+
   static Future<void> initializeNotification() async {
     await AwesomeNotifications().initialize(
       null,
@@ -60,7 +66,35 @@ class NotificationService2 {
   }
 
   static Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
-    debugPrint("onActionReceivedMethod");
+    QuoteDisplayPageController quoteDisplayPageController = Get.find<QuoteDisplayPageController>();
+
+    String selectedEmotion = receivedAction.payload?["emotion"] ?? "";
+    if (selectedEmotion.isNotEmpty) {
+      if (receivedAction.buttonKeyPressed == "CHANGE_EMOTION_KEY") {
+        Get.back();
+      } else if (receivedAction.buttonKeyPressed == "GET_NEW_QUOTE_KEY") {
+        quoteDisplayPageController.fetchQuote(selectedEmotion);
+        Get.to(QuoteDisplayPage());
+
+        await NotificationService2.showNotification(
+          title: "Emotion Tracker",
+          body: "How are you feeling now?",
+          schedule: true,
+          interval: 5,
+          payload: {"emotion": selectedEmotion},
+          actionButtons: [
+            NotificationActionButton(
+              key: "CHANGE_EMOTION_KEY",
+              label: "Change Emotion",
+            ),
+            NotificationActionButton(
+              key: "GET_NEW_QUOTE_KEY",
+              label: "Get New Quote",
+            ),
+          ],
+        );
+      }
+    }
   }
 
   static Future<void> showNotification({
