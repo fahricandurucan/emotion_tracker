@@ -16,7 +16,7 @@ class EmotionStatisticsCard extends StatelessWidget {
           margin: EdgeInsets.symmetric(
               vertical: Const.screenWidth(context) * 0.02,
               horizontal: Const.screenWidth(context) * 0.04),
-          color: const Color.fromARGB(255, 142, 230, 145),
+          color: AppColors.green,
           child: Padding(
             padding: EdgeInsets.all(Const.screenWidth(context) * 0.03),
             child: Column(
@@ -27,13 +27,13 @@ class EmotionStatisticsCard extends StatelessWidget {
                     Text(
                       'Emotion Statistics',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.white,
                         fontSize: Const.screenWidth(context) * 0.04,
                         fontWeight: FontWeight.w600,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: Const.screenHight(context) * 0.01),
+                    Const.SizedBoxHeight(context, 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -43,7 +43,7 @@ class EmotionStatisticsCard extends StatelessWidget {
                             historyPageController.lastEmotionDate.toString(), context),
                       ],
                     ),
-                    SizedBox(height: Const.screenHight(context) * 0.01),
+                    Const.SizedBoxHeight(context, 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -68,15 +68,15 @@ class EmotionStatisticsCard extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: Colors.white70,
+            color: AppColors.textGrey,
             fontSize: Const.screenWidth(context) * 0.035,
           ),
         ),
-        SizedBox(height: Const.screenHight(context) * 0.01),
+        Const.SizedBoxHeight(context, 0.01),
         Text(
           value,
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors.white,
             fontSize: Const.screenWidth(context) * 0.035,
             fontWeight: FontWeight.w400,
           ),

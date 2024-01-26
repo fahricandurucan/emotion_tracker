@@ -41,7 +41,7 @@ class EmotionButton extends StatelessWidget {
         ),
         child: Text(
           emotion,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 18),
         ),
       ),
     );

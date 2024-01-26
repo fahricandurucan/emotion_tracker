@@ -23,26 +23,20 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: Const.screenHight(context) * 0.07,
-              ),
+              Const.SizedBoxHeight(context, 0.07),
               const AnimatedTextWidget(
                   text: "How are you feeling today?",
                   fontSize: 24,
-                  textColor: Color(0xff292D32),
+                  textColor: AppColors.textBlackColor,
                   fontWeight: FontWeight.w600,
                   milliseconds: 70),
-              SizedBox(
-                height: Const.screenHight(context) * 0.1,
-              ),
+              Const.SizedBoxHeight(context, 0.1),
               titleEmotion("Positive Emotions", Icons.sentiment_very_satisfied, context),
               buildEmotionList(Const.positiveEmotion, context),
               const SizedBox(height: 50),
               titleEmotion("Negative Emotions", Icons.sentiment_very_dissatisfied, context),
               buildEmotionList(Const.negativeEmotion, context),
-              SizedBox(
-                height: Const.screenHight(context) * 0.07,
-              ),
+              Const.SizedBoxHeight(context, 0.07),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -82,15 +76,13 @@ class HomePage extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 letterSpacing: 0.25,
-                color: Color.fromARGB(255, 65, 66, 68)),
+                color: AppColors.subTitleColor),
           ),
-          SizedBox(
-            width: Const.screenHight(context) * 0.007,
-          ),
+          Const.SizedBoxHeight(context, 0.007),
           Icon(
             icon,
             size: 24,
-            color: const Color.fromARGB(255, 65, 66, 68),
+            color: AppColors.subTitleColor,
           ),
         ],
       ),
@@ -109,11 +101,11 @@ class HomePage extends StatelessWidget {
           Get.to(const HistoryPage());
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 142, 230, 145),
+          backgroundColor: AppColors.green,
         ),
         child: const Text(
           "Show History",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppColors.white),
         ));
   }
 }

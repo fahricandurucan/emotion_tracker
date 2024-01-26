@@ -101,7 +101,7 @@ class _HistoryPageState extends State<HistoryPage> with SingleTickerProviderStat
                   icon: Image.asset(
                     "assets/delete.png",
                     width: 24,
-                    color: const Color(0xff292D32),
+                    color: AppColors.textBlackColor,
                   ),
                 ),
               ],
@@ -116,9 +116,7 @@ class _HistoryPageState extends State<HistoryPage> with SingleTickerProviderStat
                   width: Const.screenWidth(context) * 0.2,
                   height: Const.screenWidth(context) * 0.2,
                 ),
-                SizedBox(
-                  height: Const.screenHight(context) * 0.015,
-                ),
+                Const.SizedBoxHeight(context, 0.015),
                 const Text('There is no past feeling yet.'),
               ],
             ))

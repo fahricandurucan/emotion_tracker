@@ -25,9 +25,7 @@ class QuoteDisplayPage extends StatelessWidget {
                   width: Const.screenWidth(context) * 0.2,
                   height: Const.screenWidth(context) * 0.2,
                 ),
-                SizedBox(
-                  height: Const.screenHight(context) * 0.015,
-                ),
+                Const.SizedBoxHeight(context, 0.015),
                 const Text(
                   'There are no quotes for this emotion yet.\nHope to see you soon.',
                   textAlign: TextAlign.center,
@@ -65,7 +63,7 @@ class QuoteDisplayPage extends StatelessWidget {
                                   },
                                   icon: const Icon(
                                     Icons.arrow_back,
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                   )),
                             ],
                           ),
@@ -73,7 +71,7 @@ class QuoteDisplayPage extends StatelessWidget {
                         Text(
                           quoteDisplayPageController.quoteList.last.emotion,
                           style: const TextStyle(
-                              fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
+                              fontSize: 24, color: AppColors.white, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         const Spacer(),
@@ -104,7 +102,7 @@ class QuoteDisplayPage extends StatelessWidget {
                                     Text(
                                       "~${quoteDisplayPageController.quoteList.last.author}~",
                                       style: const TextStyle(
-                                          color: Colors.white, fontSize: 16, letterSpacing: 0.7),
+                                          color: AppColors.white, fontSize: 16, letterSpacing: 0.7),
                                     ),
                                   ],
                                 ),

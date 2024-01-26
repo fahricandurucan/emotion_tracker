@@ -40,15 +40,13 @@ class _SplashScreenState extends State<SplashScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(
-              height: Const.screenWidth(context) * 0.02,
-            ),
+            Const.SizedBoxWidth(context, 0.02),
             const Text(
               "EMOTION TRACKER",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Color(0xff292D32),
+                color: AppColors.textBlackColor,
               ),
             ),
           ],

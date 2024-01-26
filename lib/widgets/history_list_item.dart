@@ -22,16 +22,15 @@ class HistoryListItem extends StatelessWidget {
           emotion["emotion"],
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppColors.white,
           ),
         ),
         subtitle: Text(
           _formatTimeStamp(emotion["timestamp"]),
           style: const TextStyle(
-            color: Colors.white70,
+            color: AppColors.textGrey,
           ),
         ),
-        onTap: () {},
       ),
     );
   }

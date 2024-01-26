@@ -25,7 +25,6 @@ class DatabaseHelper {
   }
 
   Future<void> insertEmotion(String emotion, String timestamp, String text, String author) async {
-    print("insert ????????* $emotion");
     final Database db = await database;
     await db.insert(
       'emotions',
