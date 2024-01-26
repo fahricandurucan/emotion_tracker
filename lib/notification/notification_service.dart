@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import '../screens/quote_display_page.dart';
 
-class NotificationService2 {
+class NotificationService {
   QuoteDisplayPageController quoteDisplayPageController = Get.find<QuoteDisplayPageController>();
 
   static Future<void> initializeNotification() async {
@@ -75,24 +75,6 @@ class NotificationService2 {
       } else if (receivedAction.buttonKeyPressed == "GET_NEW_QUOTE_KEY") {
         quoteDisplayPageController.fetchQuote(selectedEmotion);
         Get.to(QuoteDisplayPage());
-
-        await NotificationService2.showNotification(
-          title: "Emotion Tracker",
-          body: "How are you feeling now?",
-          schedule: true,
-          interval: 5,
-          payload: {"emotion": selectedEmotion},
-          actionButtons: [
-            NotificationActionButton(
-              key: "CHANGE_EMOTION_KEY",
-              label: "Change Emotion",
-            ),
-            NotificationActionButton(
-              key: "GET_NEW_QUOTE_KEY",
-              label: "Get New Quote",
-            ),
-          ],
-        );
       }
     }
   }

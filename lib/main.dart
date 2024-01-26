@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:emotion_tracker/notification/notification_service2.dart';
+import 'package:emotion_tracker/const/const.dart';
+import 'package:emotion_tracker/notification/notification_service.dart';
 import 'package:emotion_tracker/screens/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -16,7 +17,7 @@ class MyHttpOverrides extends HttpOverrides {
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService2.initializeNotification();
+  await NotificationService.initializeNotification();
   runApp(const MyApp());
 }
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.textBlackColor),
         useMaterial3: true,
       ),
       home: const SplashScreen(),

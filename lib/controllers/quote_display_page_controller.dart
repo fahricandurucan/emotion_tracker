@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dio/dio.dart';
 import 'package:emotion_tracker/models/quote.dart';
+import 'package:emotion_tracker/notification/notification_service.dart';
 import 'package:emotion_tracker/services/database_helper.dart';
 // import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
@@ -9,8 +11,8 @@ import 'package:get/get.dart';
 class QuoteDisplayPageController extends GetxController {
   final quote = "".obs;
   final imglink = "".obs;
-  final String _apiKey =
-      '00fa553d76e5afea18e8d00a83c45619'; // Oluşturduğunuz API anahtarını buraya ekleyin
+  final String _apiKey = '00fa553d76e5afea18e8d00a83c45619'; // my api key
+  final isError = false.obs;
 
   List<Quote> quoteList = <Quote>[].obs;
 
@@ -19,50 +21,41 @@ class QuoteDisplayPageController extends GetxController {
   Future<void> fetchQuote(String emotion) async {
     try {
       quote.value = "";
+      quoteList.clear();
       final response = await Dio().get(
         'https://favqs.com/api/quotes/?filter=$emotion',
         options: Options(headers: {'Authorization': 'Token $_apiKey'}),
       );
 
       if (response.statusCode == 200) {
-        print("1");
-        // Başarılı durumu
+        isError.value = false;
         final List<dynamic> quotes = response.data['quotes'];
         if (quotes.isNotEmpty) {
-          print("2");
           final randomQuote = quotes[Random().nextInt(quotes.length)];
-          print(randomQuote);
-          print(randomQuote["author"]);
           quote.value = randomQuote['body'];
           Quote newQuote = Quote(
               text: quote.value,
               author: randomQuote["author"],
               emotion: emotion,
               timestamp: DateTime.now().toString());
+          quoteModel.value = newQuote;
 
           DatabaseHelper databaseHelper = DatabaseHelper();
           databaseHelper.database;
           databaseHelper.initDatabase();
           databaseHelper.insertEmotion(
               newQuote.emotion, DateTime.now().toString(), newQuote.text, newQuote.author);
-
-          print("ccccccc ${quoteModel.value.author}");
           quoteList.add(newQuote);
           getImage(emotion);
+          sendNotification(emotion);
         } else {
-          print("3");
           print("No quotes available for this emotion.");
         }
       } else {
-        print("4");
-
-        // Başarısız durumu
         print("Failed to fetch quote. Status code: ${response.statusCode}");
       }
     } catch (error) {
-      print("5");
-
-      // Hata durumu
+      isError.value = true;
       print("Error: $error");
     }
   }
@@ -75,8 +68,27 @@ class QuoteDisplayPageController extends GetxController {
     if (quoteList.isNotEmpty) {
       return quoteList.last;
     } else {
-      // Eğer liste boşsa, null veya başka bir değer dönebilirsiniz.
       return Quote(text: "", author: "", emotion: "", timestamp: "");
     }
+  }
+
+  Future<void> sendNotification(String emotion) async {
+    return await NotificationService.showNotification(
+      title: "Emotion Tracker",
+      body: "How are you feeling now? If you still feel the same, you can get a new quote.",
+      schedule: true,
+      interval: 30,
+      payload: {"emotion": emotion},
+      actionButtons: [
+        NotificationActionButton(
+          key: "CHANGE_EMOTION_KEY",
+          label: "Change Emotion",
+        ),
+        NotificationActionButton(
+          key: "GET_NEW_QUOTE_KEY",
+          label: "Get New Quote",
+        ),
+      ],
+    );
   }
 }

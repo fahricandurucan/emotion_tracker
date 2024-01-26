@@ -30,7 +30,6 @@ class HistoryPageController extends GetxController {
       updateEmotionCounts();
       updateFirstAndLastEmotionDates();
     } catch (e) {
-      // Hata durumunda bir işlem yapabilirsiniz
       print('Error loading emotions: $e');
     }
   }
@@ -66,7 +65,6 @@ class HistoryPageController extends GetxController {
       await databaseHelper.deleteAllEmotions();
       await _loadEmotions();
     } catch (e) {
-      // Hata durumunda bir işlem yapabilirsiniz
       print('Error deleting emotions: $e');
     }
   }

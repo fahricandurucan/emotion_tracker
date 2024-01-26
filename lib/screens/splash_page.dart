@@ -1,28 +1,57 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'dart:async';
+
+import 'package:emotion_tracker/const/const.dart';
 import 'package:emotion_tracker/screens/home_page.dart';
 import 'package:flutter/material.dart';
 
-import '../const/const.dart';
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Timer(
+      const Duration(seconds: 3),
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: AnimatedSplashScreen(
-          splash: SizedBox(
-            height: double.infinity,
-            width: double.infinity,
-            child: Image.asset(
-              "assets/emotions.gif",
-              width: Const.screenWidth(context) / 2,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: Const.screenWidth(context) * 0.3,
+              height: Const.screenWidth(context) * 0.3,
+              child: Image.asset(
+                "assets/emotions.gif",
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          nextScreen: HomePage(),
-          duration: 3000,
-          splashTransition: SplashTransition.scaleTransition,
+            SizedBox(
+              height: Const.screenWidth(context) * 0.02,
+            ),
+            const Text(
+              "EMOTION TRACKER",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff292D32),
+              ),
+            ),
+          ],
         ),
       ),
     );

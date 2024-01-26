@@ -24,11 +24,11 @@ class EmotionStatisticsCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Emotion Statistics',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: Const.screenWidth(context) * 0.04,
                         fontWeight: FontWeight.w600,
                       ),
                       textAlign: TextAlign.center,
@@ -67,17 +67,17 @@ class EmotionStatisticsCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white70,
-            fontSize: 14,
+            fontSize: Const.screenWidth(context) * 0.035,
           ),
         ),
         SizedBox(height: Const.screenHight(context) * 0.01),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: Const.screenWidth(context) * 0.035,
             fontWeight: FontWeight.w400,
           ),
         ),

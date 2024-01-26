@@ -15,8 +15,8 @@ class HistoryListItem extends StatelessWidget {
           vertical: Const.screenWidth(context) * 0.02,
           horizontal: Const.screenWidth(context) * 0.04),
       color: Const.positiveEmotion.contains(emotion["emotion"])
-          ? const Color.fromARGB(255, 175, 230, 255)
-          : const Color.fromARGB(255, 255, 151, 144),
+          ? AppColors.positiveButtonColor
+          : AppColors.negativeButtonColor,
       child: ListTile(
         title: Text(
           emotion["emotion"],
@@ -31,9 +31,7 @@ class HistoryListItem extends StatelessWidget {
             color: Colors.white70,
           ),
         ),
-        onTap: () {
-          // Tıklanabilir olduğunda ek bir işlev ekleyebilirsiniz
-        },
+        onTap: () {},
       ),
     );
   }

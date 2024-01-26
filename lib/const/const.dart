@@ -36,9 +36,10 @@ class Const {
 
 // Const.dart
 class AppColors {
+  static const Color textBlackColor = Color(0xff292D32);
   static const Color backgroundColor = Color.fromARGB(255, 243, 243, 243);
-  static const Color positiveButtonColor = Color.fromARGB(255, 175, 230, 255);
-  static const Color negativeButtonColor = Color.fromARGB(255, 255, 151, 144);
+  static const Color positiveButtonColor = Color(0xFFAFE6FF);
+  static const Color negativeButtonColor = Color(0xFFFF9790);
 }
 
 class AppStyles {

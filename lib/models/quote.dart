@@ -4,7 +4,6 @@ class Quote {
   String text;
   String author;
 
-  // Kurucu method (constructor)
   Quote({
     required this.emotion,
     required this.timestamp,
