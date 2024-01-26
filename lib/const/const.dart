@@ -2,15 +2,15 @@ import 'package:flutter/widgets.dart';
 
 class Const {
   static List<String> positiveEmotion = [
-    "Alertness",
-    "Amusement",
+    "Joy",
     "Awe",
     "Gratitude",
     "Hope",
-    "Joy",
+    "Amusement",
     "Love",
     "Pride",
-    "Satisfaction"
+    "Satisfaction",
+    "Alertness",
   ];
 
   static List<String> negativeEmotion = [

@@ -77,7 +77,7 @@ class QuoteDisplayPageController extends GetxController {
       title: "Emotion Tracker",
       body: "How are you feeling now? If you still feel the same, you can get a new quote.",
       schedule: true,
-      interval: 30,
+      interval: 300, // 300 seconds, 5 minutes
       payload: {"emotion": emotion},
       actionButtons: [
         NotificationActionButton(
